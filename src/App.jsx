@@ -12,19 +12,22 @@ import './App.css';
 
 export default function App() {
   const [cursorEnabled, setCursorEnabled] = useState(true);
-  const [triggerNubiCount, setTriggerNubiCount] = useState(0);
+  const [isNubiOpen, setIsNubiOpen] = useState(false);
 
   const handleToggleCursor = () => {
     setCursorEnabled((prev) => !prev);
   };
 
-  const handleTriggerNubi = () => {
-    setTriggerNubiCount((prev) => prev + 1);
-    // Find the nubi bubble button and click it to open companion dialog
-    const companionBtn = document.querySelector('.nubi-bubble-btn');
-    if (companionBtn) {
-      companionBtn.click();
-    }
+  const handleToggleNubi = () => {
+    setIsNubiOpen((prev) => !prev);
+  };
+
+  const handleOpenNubi = () => {
+    setIsNubiOpen(true);
+  };
+
+  const handleCloseNubi = () => {
+    setIsNubiOpen(false);
   };
 
   const handleScrollToSurvey = () => {
@@ -36,44 +39,45 @@ export default function App() {
 
   return (
     <div className={`tvi-app-root ${cursorEnabled ? 'custom-cloud-cursor-active' : ''}`}>
-      {/* Dynamic Cloud Cursor & Falling Stars Particle System */}
+      {/* Dynamic Cloud Cursor & Falling Stars Particle System (Desktop) */}
       <CloudCursor enabled={cursorEnabled} key={`cursor-${cursorEnabled}`} />
 
-      {/* Navigation Header */}
+      {/* Navigation Header with Responsive Mobile Drawer */}
       <Navbar
         cursorEnabled={cursorEnabled}
         onToggleCursor={handleToggleCursor}
-        onTriggerNubi={handleTriggerNubi}
+        onTriggerNubi={handleOpenNubi}
       />
 
-      {/* Main Content Area */}
+      {/* Main Content Flow */}
       <main className="main-content-flow">
         {/* Hero Section */}
         <Hero
           onStartSurvey={handleScrollToSurvey}
-          onMeetNubi={handleTriggerNubi}
+          onMeetNubi={handleOpenNubi}
         />
 
-        {/* Panorama Estudiantil (The exact 4 indicators & percentages from user's image) */}
+        {/* Panorama Estudiantil (4 Key Indicators & Delicacy Reflection) */}
         <PanoramaEstudiantil />
 
-        {/* Ámbito Escolar & Género */}
+        {/* Ámbito Escolar & Género (Pillars & Real-World Cases) */}
         <AmbitoEscolar />
 
-        {/* Mitos y Verdades */}
+        {/* Mitos y Verdades (Concise & Optimized for PC and Mobile) */}
         <MitosVerdades />
 
-        {/* Encuesta: "¿realmente te sientes escuchadx en tu ámbito escolar?" */}
+        {/* Encuesta Escolar ("¿realmente te sientes escuchadx en tu ámbito escolar?") */}
         <EncuestaEscolar />
       </main>
 
       {/* Comforting & Reflective Footer */}
       <Footer />
 
-      {/* Floating Interactive Nubi Companion (Mobile & Desktop) */}
+      {/* Interactive Nubi Assistant Modal & Floating Companion (Mobile & PC) */}
       <NubiCompanionModal
-        key={triggerNubiCount}
-        onFactRequested={() => {}}
+        isOpen={isNubiOpen}
+        onToggle={handleToggleNubi}
+        onClose={handleCloseNubi}
       />
     </div>
   );
