@@ -1969,3 +1969,812 @@
     padding: 5px 10px;
   }
 }
+
+/* ==========================================================================
+   11. STUDENT GATEKEEPER / FILTRO ESTRICTO ESTUDIANTIL
+   ========================================================================== */
+.gatekeeper-overlay {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: radial-gradient(circle at 10% 20%, #e0f2fe 0%, #f8fafc 40%, #fce7f3 100%);
+  position: relative;
+  z-index: 100;
+}
+
+.gatekeeper-modal-card {
+  width: 100%;
+  max-width: 680px;
+  background: #ffffff;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 24px;
+  padding: 32px 28px;
+  box-shadow: 0 20px 45px -10px rgba(59, 130, 246, 0.25), 0 10px 20px -5px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.gatekeeper-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.gate-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.gate-cloud-badge {
+  font-size: 30px;
+  animation: floatGentle 3s infinite ease-in-out;
+}
+
+.gate-app-name {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.5px;
+}
+
+.gate-subtitle {
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.gate-security-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  align-self: flex-start;
+}
+
+.gate-tabs-row {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 12px;
+  padding: 4px;
+  gap: 6px;
+}
+
+.gate-tab-btn {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.gate-tab-btn.active-gate-tab {
+  background: #ffffff;
+  color: #1e3a8a;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.gate-form-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.gate-intro-notice {
+  background: #fefce8;
+  border: 1px solid #fde047;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #854d0e;
+  line-height: 1.45;
+}
+
+.gate-error-banner {
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #b91c1c;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.gate-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gate-field-label {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.gate-field-label .req {
+  color: #ef4444;
+}
+
+.gate-radio-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gate-radio-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gate-radio-card:hover {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+.gate-radio-card.radio-selected {
+  background: #eff6ff;
+  border-color: #3b82f6;
+}
+
+.gate-radio-card input[type="radio"] {
+  accent-color: #2563eb;
+  transform: scale(1.15);
+}
+
+.radio-label-text {
+  font-size: 13px;
+  color: #334155;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.gate-credentials-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 580px) {
+  .gate-credentials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gate-input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.gate-text-input {
+  padding: 11px 14px;
+  border-radius: 10px;
+  border: 1.5px solid #cbd5e1;
+  font-size: 14px;
+  font-family: inherit;
+  color: #0f172a;
+  background: #f8fafc;
+  transition: border-color 0.2s ease;
+}
+
+.gate-text-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.gate-hint {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.gate-avatars-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.gate-avatar-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  border: 1.5px solid #e2e8f0;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gate-avatar-btn:hover {
+  background: #e2e8f0;
+  transform: scale(1.05);
+}
+
+.gate-avatar-btn.avatar-active {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px #93c5fd;
+  transform: scale(1.08);
+}
+
+.gate-compromiso-box {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.compromiso-check-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 12px;
+  color: #166534;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.compromiso-check-label input {
+  margin-top: 3px;
+  accent-color: #10b981;
+  transform: scale(1.2);
+  flex-shrink: 0;
+}
+
+.btn-gate-submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #4f46e5 0%, #2563eb 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 800;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 18px -4px rgba(59, 130, 246, 0.4);
+  transition: all 0.2s ease;
+}
+
+.btn-gate-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -4px rgba(59, 130, 246, 0.5);
+}
+
+/* Blocked screen */
+.gatekeeper-blocked-card {
+  width: 100%;
+  max-width: 540px;
+  background: #ffffff;
+  border: 2px solid #f87171;
+  border-radius: 24px;
+  padding: 36px 28px;
+  box-shadow: 0 20px 40px -10px rgba(239, 68, 68, 0.25);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.blocked-shield-icon {
+  font-size: 44px;
+}
+
+.blocked-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  color: #991b1b;
+}
+
+.blocked-text {
+  font-size: 14px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+.blocked-note {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 13px;
+  color: #7f1d1d;
+  line-height: 1.5;
+}
+
+.btn-retry-gatekeeper {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-retry-gatekeeper:hover {
+  background: #e2e8f0;
+}
+
+/* ==========================================================================
+   12. MURO DE VOCES ESTUDIANTILES (ANÓNIMO Y SEGURO)
+   ========================================================================== */
+.muro-section {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.nav-item-muro {
+  color: #4f46e5 !important;
+}
+
+.muro-create-card {
+  background: #ffffff;
+  border: 1.5px solid #bfdbfe;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 8px 20px -4px rgba(59, 130, 246, 0.12);
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.muro-card-top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  gap: 12px;
+}
+
+.user-author-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-author-avatar {
+  width: 36px;
+  height: 36px;
+  background: #eff6ff;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.user-author-info strong {
+  display: block;
+  font-size: 14px;
+  color: #0f172a;
+}
+
+.user-author-info span {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.safe-shield-tag {
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  color: #065f46;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 9999px;
+}
+
+.muro-textarea {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1.5px solid #cbd5e1;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1e293b;
+  resize: vertical;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.muro-textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.muro-form-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.muro-controls-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.muro-select-category {
+  padding: 8px 12px;
+  border-radius: 9px;
+  border: 1.5px solid #cbd5e1;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+}
+
+.muro-anonymous-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #475569;
+  cursor: pointer;
+}
+
+.muro-anonymous-toggle input {
+  accent-color: #4f46e5;
+}
+
+.muro-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.muro-char-count {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.btn-publish-post {
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  color: #ffffff;
+  font-size: 13.5px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-publish-post:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(79, 70, 229, 0.4);
+}
+
+.muro-success-toast {
+  margin-top: 12px;
+  background: #ecfdf5;
+  border: 1px solid #86efac;
+  color: #065f46;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 14px;
+  border-radius: 10px;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Category Filters Bar */
+.muro-filters-bar {
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #64748b;
+}
+
+.filter-chips-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.filter-chip-btn {
+  padding: 6px 12px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.filter-chip-btn:hover {
+  background: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.filter-chip-btn.active-filter {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+/* Muro Posts Grid */
+.muro-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.muro-post-card {
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.muro-post-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.post-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.post-author-data {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.post-avatar {
+  font-size: 20px;
+}
+
+.post-alias {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.post-time {
+  font-size: 11px;
+  color: #64748b;
+  display: block;
+}
+
+.post-category-badge {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  white-space: nowrap;
+}
+
+.post-body-text {
+  font-size: 13.5px;
+  color: #334155;
+  line-height: 1.55;
+  margin-bottom: 14px;
+}
+
+.post-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #f8fafc;
+}
+
+.btn-reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-reaction:hover {
+  background: #eff6ff;
+  border-color: #93c5fd;
+  color: #1d4ed8;
+  transform: scale(1.03);
+}
+
+.btn-reaction strong {
+  color: #0f172a;
+}
+
+.muro-disclaimer-card {
+  max-width: 860px;
+  margin: 0 auto;
+  width: 100%;
+  background: #f0fdf4;
+  border: 1px dashed #86efac;
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-size: 12.5px;
+  color: #166534;
+  text-align: center;
+}
+
+.muro-empty-state {
+  grid-column: 1 / -1;
+  background: #f8fafc;
+  border: 1px dashed #cbd5e1;
+  border-radius: 14px;
+  padding: 32px;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.muro-empty-state span {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Student Profile Pill in Navbar */
+.student-profile-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eff6ff;
+  border: 1.5px solid #93c5fd;
+  padding: 5px 10px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1d4ed8;
+}
+
+.student-pill-avatar {
+  font-size: 14px;
+}
+
+.student-pill-alias {
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-pill-logout {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  opacity: 0.7;
+  padding: 0 2px;
+  transition: opacity 0.2s ease;
+}
+
+.btn-pill-logout:hover {
+  opacity: 1;
+}
+
+.mobile-student-banner {
+  background: #eff6ff;
+  border: 1.5px solid #93c5fd;
+  border-radius: 12px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.mobile-student-banner strong {
+  display: block;
+  font-size: 13.5px;
+  color: #1e3a8a;
+}
+
+.mobile-student-banner span {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.btn-mobile-logout {
+  margin-left: auto;
+  font-size: 12px;
+  color: #dc2626;
+  font-weight: 700;
+  padding: 4px 8px;
+  background: #fee2e2;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.mobile-muro-link {
+  background: #fdf4ff;
+  border-color: #f0abfc;
+  color: #9333ea;
+}
+
+.tvi-loading-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 700;
+  color: #2563eb;
+  background: #f8fafc;
+}

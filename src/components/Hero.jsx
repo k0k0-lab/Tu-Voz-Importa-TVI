@@ -5,7 +5,7 @@ export default function Hero({ onStartSurvey, onMeetNubi }) {
     <section id="inicio" className="hero-section">
       <div className="hero-badge-pill">
         <span className="hero-badge-dot"></span>
-        <span>Educación con Igualdad • Convivencia Segura • Voz Estudiantil</span>
+        <span>Espacio Exclusivo de Alumnos • Igualdad • Convivencia Escolar</span>
       </div>
 
       <h1 className="hero-title">
@@ -16,8 +16,8 @@ export default function Hero({ onStartSurvey, onMeetNubi }) {
       <p className="hero-description">
         En la escuela pasamos gran parte de nuestras vidas. Cuando existe igualdad de género,
         nadie calla por miedo a burlas, los liderazgos se comparten con respeto y cada persona
-        aprende en un refugio seguro. TVI es un espacio para reflexionar, identificar si tu entorno
-        es sano y tender puentes de ayuda mutua.
+        aprende en un refugio seguro. TVI es un espacio exclusivo de estudiantes para informarse,
+        evaluar su entorno y desahogarse de forma 100% anónima.
       </p>
 
       <div className="hero-cta-group">
@@ -27,9 +27,9 @@ export default function Hero({ onStartSurvey, onMeetNubi }) {
           <span className="btn-arrow">➜</span>
         </a>
 
-        <a href="#panorama" className="btn-secondary-soft">
-          <span className="btn-icon">📊</span>
-          <span>Ver Panorama Estudiantil</span>
+        <a href="#muro-anonimo" className="btn-secondary-soft">
+          <span className="btn-icon">🕊️</span>
+          <span>Muro de Voces Anónimas</span>
         </a>
 
         <button onClick={onMeetNubi} className="btn-mascot-inline">
@@ -49,22 +49,21 @@ export default function Hero({ onStartSurvey, onMeetNubi }) {
         </div>
 
         <div className="quick-card">
-          <div className="qc-icon">⚖️</div>
+          <div className="qc-icon">🕊️</div>
           <div className="qc-text">
-            <strong>Equidad Real</strong>
-            <span>Mismos derechos y oportunidades</span>
+            <strong>Muro Anónimo</strong>
+            <span>Desahogo libre de juicios</span>
           </div>
         </div>
 
         <div className="quick-card">
           <div className="qc-icon">🛡️</div>
           <div className="qc-text">
-            <strong>Espacio Seguro</strong>
-            <span>Redes de apoyo frente al acoso</span>
+            <strong>Espacio Protegido</strong>
+            <span>Solo estudiantes verificados</span>
           </div>
         </div>
       </div>
     </section>
   );
 }
-

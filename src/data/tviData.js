@@ -70,7 +70,6 @@ export const AMBITO_ESCOLAR_PILARES = [
   }
 ];
 
-// Textos de Mitos y Verdades optimizados y concisos para que quepan perfectamente en cualquier pantalla sin desbordar
 export const MITOS_Y_VERDADES = [
   {
     id: 1,
@@ -246,3 +245,72 @@ export const NUBI_PREGUNTAS_RAPIDAS = [
     respuesta: "Eres únicx, valiosx y fuerte. Que nadie te haga creer que eres pequeñx. ¡Tu voz tiene un propósito inmenso!"
   }
 ];
+
+// Muro Anónimo: Experiencias estudiantiles precargadas (auténticas y respetuosas)
+export const EXPERIENCIAS_INICIALES = [
+  {
+    id: 1,
+    alias: "Estudiante de 4° de Secundaria",
+    avatar: "🎨",
+    categoria: "Libertad de Opinión",
+    tiempo: "Hace 2 horas",
+    texto: "En mi salón casi siempre que un chico quiere hablar de arte o literatura los demás se ríen y dicen que eso no es 'de hombres'. A mí me encanta escribir poemas pero tengo que esconder mis cuadernos en la mochila. Esta app me hace sentir que no estoy mal por sentir así.",
+    apoyos: 18,
+    abrazos: 12
+  },
+  {
+    id: 2,
+    alias: "Chica de 2° de Bachillerato",
+    avatar: "🔬",
+    categoria: "Equidad en Equipos",
+    tiempo: "Hace 5 horas",
+    texto: "En el laboratorio de física, los chicos automáticamente agarraron los instrumentos y a nosotras nos dijeron 'ustedes anoten las conclusiones y hagan la portada bonita'. Nos quejamos con el profe pero nos dijo que no exageremos. Ojalá los profes entiendan que nosotras también queremos liderar las prácticas.",
+    apoyos: 34,
+    abrazos: 19
+  },
+  {
+    id: 3,
+    alias: "Compañerx de 3° de Secundaria",
+    avatar: "🛡️",
+    categoria: "Burlas y Micro-acoso",
+    tiempo: "Ayer",
+    texto: "Las bromas pesadas sobre el uniforme y el cuerpo en los pasillos a veces son insoportables. Nadie dice nada porque tienen miedo de quedar como 'la persona amargada'. Saber que hay más personas sintiendo lo mismo me da fuerzas para buscar a la orientadora escolar mañana.",
+    apoyos: 42,
+    abrazos: 27
+  },
+  {
+    id: 4,
+    alias: "Joven de 5° de Secundaria",
+    avatar: "🌱",
+    categoria: "Red de Apoyo y Esperanza",
+    tiempo: "Hace 2 días",
+    texto: "El año pasado casi dejo de venir a clases por los comentarios que me hacían. Pero encontré a dos amigas y a un tutor que me escucharon de verdad. No se rindan si hoy se siente difícil; buscar ayuda a tiempo cambia todo.",
+    apoyos: 55,
+    abrazos: 38
+  }
+];
+
+// Filtro estricto para validar que sea estudiante de secundaria en adelante
+export const FILTRO_VALIDACION_ESTUDIANTE = {
+  nivelesValidos: [
+    { id: "secundaria", label: "Secundaria (1° a 5° / 6° grado - 12 a 16 años)", valido: true },
+    { id: "bachillerato", label: "Preparatoria / Bachillerato / Media Superior (15 a 18 años)", valido: true },
+    { id: "superior", label: "Universidad / Educación Técnica Superior (18+ años)", valido: true },
+    { id: "adulto_externo", label: "Adulto no estudiante / Docente / Directivo / Tutor externo", valido: false }
+  ],
+  preguntaSituacional: {
+    pregunta: "¿Cuál de las siguientes afirmaciones describe mejor la realidad de la igualdad y convivencia que vives en tu entorno escolar?",
+    opciones: [
+      { id: "a", texto: "Existen silencios forzados, bromas normalizadas o roles desiguales en grupos que nos gustaría cambiar con respeto.", esEstudiante: true },
+      { id: "b", texto: "Siento que a veces mi opinión o mis emociones son juzgadas por estereotipos de género y busco un espacio seguro.", esEstudiante: true },
+      { id: "c", texto: "Los jóvenes de hoy exageran con todo y no aguantan una broma sana; no hay ningún problema.", esEstudiante: false }
+    ]
+  },
+  preguntaIntencion: {
+    pregunta: "¿Con qué objetivo ingresas a TVI (Tu Voz Importa)?",
+    opciones: [
+      { id: "respeto", texto: "Vengo a informarme, evaluar mi entorno escolar o compartir mi experiencia sin juzgar a nadie.", esValido: true },
+      { id: "curiosidad_destructiva", texto: "Vengo a ver qué escriben para burlarme o fiscalizar a los estudiantes.", esValido: false }
+    ]
+  }
+};
