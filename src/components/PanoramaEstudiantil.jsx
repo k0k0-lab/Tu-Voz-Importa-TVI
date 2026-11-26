@@ -76,14 +76,14 @@ export default function PanoramaEstudiantil() {
 
       {/* Delicacy & Empathy Callout Box */}
       <div className="delicacy-statement-box">
-        <div className="delicacy-callout-icon">🕊️</div>
+        <div className="delicacy-callout-accent" aria-hidden="true" />
         <div className="delicacy-callout-content">
-          <h4>La delicadeza detrás de cada porcentaje</h4>
+          <h4>La realidad detrás de cada porcentaje</h4>
           <p>
             Detrás del <strong>68%</strong> de jóvenes que guardan silencio o del <strong>59%</strong> que no sabe a quién recurrir, 
-            hay miradas que buscan complicidad, mentes brillantes intimidadas por estereotipos de género y corazones que temen el rechazo. 
-            La escuela debe ser el lugar donde aprendas a volar, no la jaula donde aprendas a callar. Visibilizar estas cifras nos compromete a 
-            cuidarnos unos a otros.
+            existen inquietudes académicas silenciadas por estereotipos de género y temor al rechazo. 
+            La escuela debe ser un entorno formativo de respeto y acompañamiento mutuo. Visibilizar estas cifras nos compromete a 
+            actuar con responsabilidad.
           </p>
         </div>
       </div>

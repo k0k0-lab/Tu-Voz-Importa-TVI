@@ -1,32 +1,35 @@
-/* TVI (Tu Voz Importa) - Global Styles & Design System */
+/* TVI (Tu Voz Importa) - Global Styles & Soft Sage Design System */
 
 :root {
   --font-main: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-display: 'Outfit', var(--font-main);
 
-  /* Palette - Warm, Safe, Empathetic Pastels & Deep Blues */
-  --bg-primary: #f8fafc;
-  --bg-surface: #ffffff;
-  --bg-surface-soft: #f1f5f9;
+  /* Palette - Formal Soft Sage Green & Petrol Green Accent */
+  --bg-primary: #f3f6f2;
+  --bg-surface: #fbfdfb;
+  --bg-surface-soft: #e7efe7;
   
-  --text-main: #1e293b;
-  --text-muted: #64748b;
-  --text-heading: #0f172a;
+  --text-main: #22352c;
+  --text-muted: #52675d;
+  --text-heading: #0e383a;
 
-  /* Accent Tones */
-  --primary: #4f46e5;
-  --primary-hover: #4338ca;
-  --primary-light: #e0e7ff;
-  --sky: #0284c7;
-  --sky-light: #e0f2fe;
-  --teal: #0d9488;
-  --teal-light: #ccfbf1;
-  --amber: #d97706;
-  --amber-light: #fef3c7;
-  --rose: #e11d48;
-  --rose-light: #ffe4e6;
+  /* Accent Tones - Petrol Green & Sage */
+  --petrol: #0e4749;
+  --petrol-dark: #0a3638;
+  --petrol-light: #e2eeed;
+  --primary: #3f6f58;
+  --primary-hover: #2f5845;
+  --primary-light: #e2ede5;
+  --sky: #1e5f61;
+  --sky-light: #e1efef;
+  --teal: #2e6b5c;
+  --teal-light: #d7ebe3;
+  --amber: #b77936;
+  --amber-light: #fbf1df;
+  --rose: #b84a59;
+  --rose-light: #f9e6e9;
 
-  /* Semaphore Status Colors */
+  /* Semaphore Status Colors (kept distinct & clear) */
   --sem-red: #ef4444;
   --sem-red-bg: #fef2f2;
   --sem-red-border: #fca5a5;
@@ -40,12 +43,12 @@
   --sem-green-border: #6ee7b7;
 
   /* Borders & Shadows */
-  --border-subtle: #e2e8f0;
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-  --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.22);
+  --border-subtle: #d3e0d4;
+  --shadow-sm: 0 1px 3px 0 rgba(35, 59, 43, 0.06);
+  --shadow-md: 0 6px 14px -2px rgba(47, 79, 57, 0.09), 0 2px 5px -2px rgba(35, 59, 43, 0.05);
+  --shadow-lg: 0 12px 24px -4px rgba(47, 79, 57, 0.11), 0 4px 8px -4px rgba(35, 59, 43, 0.06);
+  --shadow-xl: 0 20px 30px -6px rgba(47, 79, 57, 0.12), 0 8px 12px -6px rgba(35, 59, 43, 0.06);
+  --shadow-glow: 0 0 25px rgba(82, 121, 94, 0.24);
 }
 
 * {
@@ -66,12 +69,12 @@ html {
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at 10% 20%, #eff6ff 0%, #f8fafc 40%, #fdf4ff 100%);
+  background: radial-gradient(circle at 12% 18%, #e2ece2 0%, #f1f5f0 46%, #e7efe5 100%);
   background-attachment: fixed;
   overflow-x: hidden;
 }
 
-/* Custom Cloud Cursor rules */
+/* Custom Leaf Cursor rules */
 body.has-custom-cursor,
 .custom-cloud-cursor-active {
   cursor: default;
@@ -104,7 +107,7 @@ button {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-8px);
+    transform: translateY(-7px);
   }
 }
 
@@ -121,10 +124,10 @@ button {
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+    box-shadow: 0 0 14px rgba(82, 121, 94, 0.35);
   }
   50% {
-    box-shadow: 0 0 25px rgba(99, 102, 241, 0.7);
+    box-shadow: 0 0 24px rgba(82, 121, 94, 0.65);
   }
 }
 

@@ -7,8 +7,8 @@ export const PANORAMA_DATA = [
     title: "Estudiantes que dudan en opinar por temor a burlas",
     subtitle: "La seguridad psicológica en el aula es clave para el aprendizaje.",
     category: "Participación y Confianza",
-    accent: "#d97706",
-    barColor: "linear-gradient(90deg, #1e293b 0%, #d97706 100%)",
+    accent: "#b77936",
+    barColor: "linear-gradient(90deg, #274030 0%, #b77936 100%)",
     impact: "Cuando predomina el miedo al ridículo o a burlas machistas, el 68% de las y los alumnos opta por callar, apagando su curiosidad intelectual y bajando su rendimiento.",
     solution: "Crear normas colectivas de cero tolerancia a la burla y validar cada aporte con empatía desde el primer día."
   },
@@ -18,8 +18,8 @@ export const PANORAMA_DATA = [
     title: "Jóvenes que perciben roles desiguales en equipos",
     subtitle: "Suele asignarse el liderazgo o la redacción según estereotipos.",
     category: "Dinámica de Trabajo",
-    accent: "#c2410c",
-    barColor: "linear-gradient(90deg, #1e293b 0%, #c2410c 100%)",
+    accent: "#a8643a",
+    barColor: "linear-gradient(90deg, #274030 0%, #a8643a 100%)",
     impact: "Aún se delega automáticamente la coordinación o áreas técnicas a los varones y la decoración o toma de notas a las mujeres. Esto limita el desarrollo integral de talentos.",
     solution: "Rotar roles de liderazgo de manera obligatoria y fomentar que todxs experimenten coordinación, investigación y oratoria."
   },
@@ -29,8 +29,8 @@ export const PANORAMA_DATA = [
     title: "Mejora del clima escolar al existir redes de apoyo",
     subtitle: "Contar con alguien de confianza reduce el aislamiento estudiantil.",
     category: "Bienestar y Respaldo",
-    accent: "#0d9488",
-    barColor: "linear-gradient(90deg, #0f172a 0%, #0d9488 100%)",
+    accent: "#3f7665",
+    barColor: "linear-gradient(90deg, #223b2c 0%, #52795e 100%)",
     impact: "Tener al menos un referente empático (docente, tutor, compañerx o directivo) disminuye el riesgo de depresión escolar y potencia las ganas de asistir al colegio.",
     solution: "Promover círculos de escucha, buzones de consulta anónima y tutorías entre pares donde la vulnerabilidad sea bienvenida."
   },
@@ -40,8 +40,8 @@ export const PANORAMA_DATA = [
     title: "Estudiantes que no saben a quién acudir ante exclusión",
     subtitle: "Visibilizar rutas de orientación escolar salva y acompaña.",
     category: "Orientación y Rutas de Ayuda",
-    accent: "#d97706",
-    barColor: "linear-gradient(90deg, #1e293b 0%, #d97706 100%)",
+    accent: "#b77936",
+    barColor: "linear-gradient(90deg, #274030 0%, #b77936 100%)",
     impact: "Casi 6 de cada 10 estudiantes viven el maltrato o la discriminación en soledad porque no conocen los canales de ayuda de su institución o temen represalias.",
     solution: "Publicar en carteleras y medios digitales los pasos exactos y personas designadas para brindar auxilio sin revictimizar."
   }

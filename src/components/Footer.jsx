@@ -1,62 +1,65 @@
 import React from 'react';
+import footerBgImg from '../assets/footer-bg.jpg';
 
 export default function Footer() {
   return (
-    <footer className="tvi-footer">
+    <footer
+      className="tvi-footer"
+      style={{
+        backgroundImage: `linear-gradient(180deg, #f1f5f0 0%, rgba(241, 245, 240, 0.55) 16%, rgba(226, 238, 224, 0.35) 100%), url(${footerBgImg})`,
+      }}
+    >
       <div className="footer-comfort-card">
-        <div className="comfort-icon-badge">✨🤍✨</div>
-        <h3 className="comfort-heading">Una palabra para tu corazón</h3>
+        <span className="comfort-eyebrow">MENSAJE DE ACOMPAÑAMIENTO</span>
+        <h3 className="comfort-heading">Tu voz y tu bienestar son prioridad</h3>
         <blockquote className="comfort-quote">
-          "Si alguna vez has sentido que tu voz no cabe en el aula, que tus preguntas incomodan o que debes 
-          hacerte pequeñx para no ser blanco de burlas, escucha esto con calma: <strong>no hay nada roto en ti</strong>. 
-          Tu voz, tu sensibilidad y tus sueños son valiosos exactamente como son. 
-          Nadie tiene derecho a apagar tu brillo ni a definir tus capacidades por estereotipos de género. 
-          Incluso en los días donde el colegio se sienta pesado y el silencio parezca la única salida, 
-          recuerda que tu existencia importa, tu presencia hace falta y mereces caminar por los pasillos con la frente en alto. 
-          No estás solx: hay personas esperando escucharte con cariño y respeto."
+          "Si alguna vez has sentido que tu participación no tiene lugar en el aula, que tus preguntas incomodan o que debes
+          guardar silencio para evitar burlas, recuerda esto con serenidad: <strong>no hay nada incorrecto en ti</strong>.
+          Tu voz, tu criterio y tus metas son valiosos. Nadie tiene derecho a limitar tus capacidades por estereotipos de género.
+          Mereces transitar la etapa escolar con respeto, seguridad y respaldo."
         </blockquote>
-        <div className="comfort-author">— Con cariño, la comunidad de TVI (Tu Voz Importa) ☁️</div>
+        <div className="comfort-author">— Comunidad Educativa TVI (Tu Voz Importa) 🍃</div>
       </div>
 
       <div className="footer-support-strip">
         <div className="support-strip-item">
-          <span className="strip-icon">📞</span>
+          <span className="strip-num">01</span>
           <div>
-            <strong>¿Necesitas hablar hoy?</strong>
-            <p>Busca a tu orientadorx escolar o llama a la línea infantil/juvenil de tu país.</p>
+            <strong>Canales de orientación</strong>
+            <p>Acude a tu tutoría escolar o a las líneas confidenciales de apoyo juvenil de tu localidad.</p>
           </div>
         </div>
 
         <div className="support-strip-item">
-          <span className="strip-icon">🛡️</span>
+          <span className="strip-num">02</span>
           <div>
-            <strong>Pedir ayuda es valentía</strong>
-            <p>Un supervisor mayor de confianza está para protegerte, nunca para juzgarte.</p>
+            <strong>Pedir ayuda es responsabilidad</strong>
+            <p>Contar con una persona adulta de confianza protege tu integridad física y emocional.</p>
           </div>
         </div>
 
         <div className="support-strip-item">
-          <span className="strip-icon">🌈</span>
+          <span className="strip-num">03</span>
           <div>
-            <strong>Igualdad es empatía</strong>
-            <p>Construyamos escuelas libres de prejuicios, machismo y violencia.</p>
+            <strong>Igualdad es convivencia</strong>
+            <p>Construyamos instituciones educativas libres de prejuicios, discriminación y violencia.</p>
           </div>
         </div>
       </div>
 
       <div className="footer-bottom-bar">
         <div className="footer-brand-info">
-          <span className="footer-logo">☁️ TVI</span>
-          <span>Tu Voz Importa • Proyecto Educativo de Igualdad de Género y Convivencia Escolar</span>
+          <span className="footer-logo">🍃 TVI</span>
+          <span>Tu Voz Importa • Igualdad de Género y Convivencia en Secundaria</span>
         </div>
         <div className="footer-links">
           <a href="#inicio">Inicio</a>
           <a href="#panorama">Panorama</a>
+          <a href="#igualdad-secundaria">Secundaria</a>
           <a href="#encuesta">Encuesta</a>
-          <a href="#mitos-verdades">Mitos y Verdades</a>
+          <a href="#conclusion">Conclusión</a>
         </div>
       </div>
     </footer>
   );
 }
-

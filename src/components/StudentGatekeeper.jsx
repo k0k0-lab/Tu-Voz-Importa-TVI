@@ -163,7 +163,7 @@ export default function StudentGatekeeper({ onAuthenticated }) {
         {/* Brand Banner */}
         <div className="gatekeeper-header">
           <div className="gate-brand-row">
-            <div className="gate-cloud-badge">☁️✨</div>
+            <div className="gate-cloud-badge">🍃✨</div>
             <div>
               <h1 className="gate-app-name">TVI (Tu Voz Importa)</h1>
               <p className="gate-subtitle">Comunidad Segura de Igualdad y Convivencia Escolar</p>
@@ -379,3 +379,4 @@ export default function StudentGatekeeper({ onAuthenticated }) {
     </div>
   );
 }
+

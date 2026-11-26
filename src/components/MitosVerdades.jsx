@@ -39,7 +39,7 @@ export default function MitosVerdades() {
             className="btn-toggle-all-mitos"
             aria-label="Alternar todos los mitos y verdades"
           >
-            <span>{allFlipped ? '🔄 Volver a ver Mitos' : '✨ Revelar Todas las Verdades'}</span>
+            <span>{allFlipped ? 'Volver a ver mitos' : 'Revelar todas las verdades'}</span>
           </button>
         </div>
       </div>
@@ -65,20 +65,20 @@ export default function MitosVerdades() {
                 {/* Front: Mito */}
                 <div className="myth-card-face myth-front">
                   <div className="myth-header">
-                    <span className="myth-badge">❌ MITO #{item.id}</span>
-                    <span className="flip-icon-hint">Toca para voltear 🔄</span>
+                    <span className="myth-badge">MITO #{item.id}</span>
+                    <span className="flip-icon-hint">Ver análisis</span>
                   </div>
                   <h3 className="myth-text">"{item.mito}"</h3>
                   <div className="myth-bottom-bar">
-                    <span>¿Es verdad? Toca para descubrir</span>
+                    <span>Clic para contrastar</span>
                   </div>
                 </div>
 
                 {/* Back: Verdad */}
                 <div className="myth-card-face myth-back">
                   <div className="truth-header">
-                    <span className="truth-badge">✅ LA VERDAD</span>
-                    <span className="flip-icon-hint">Volver 🔄</span>
+                    <span className="truth-badge">EVIDENCIA</span>
+                    <span className="flip-icon-hint">Volver</span>
                   </div>
                   <h4 className="truth-text">{item.verdad}</h4>
                   <p className="truth-explanation">{item.explicacion}</p>
@@ -90,7 +90,7 @@ export default function MitosVerdades() {
       </div>
 
       <div className="mitos-summary-note">
-        <span>💡 <strong>Consejo de Nubi:</strong> Cuestionar los estereotipos en el colegio abre caminos para que cada estudiante sea libre de aprender y soñar sin límites.</span>
+        <span>🍃 <strong>Nota de Hojita:</strong> Cuestionar los estereotipos en el colegio permite que cada estudiante desarrolle su potencial sin barreras de género.</span>
       </div>
     </section>
   );

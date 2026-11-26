@@ -3,10 +3,12 @@ import CloudCursor from './components/CloudCursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import PanoramaEstudiantil from './components/PanoramaEstudiantil';
+import IgualdadSecundaria from './components/IgualdadSecundaria';
 import AmbitoEscolar from './components/AmbitoEscolar';
 import MitosVerdades from './components/MitosVerdades';
 import MuroAnonimo from './components/MuroAnonimo';
 import EncuestaEscolar from './components/EncuestaEscolar';
+import ConclusionSection from './components/ConclusionSection';
 import Footer from './components/Footer';
 import NubiCompanionModal from './components/NubiCompanionModal';
 import StudentGatekeeper from './components/StudentGatekeeper';
@@ -65,12 +67,10 @@ export default function App() {
     }
   };
 
-  // If waiting for auth state initialization
   if (isLoadingAuth) {
-    return <div className="tvi-loading-screen"><span>☁️ Cargando santuario TVI...</span></div>;
+    return <div className="tvi-loading-screen"><span>🍃 Cargando plataforma TVI...</span></div>;
   }
 
-  // If NOT logged in / not verified as a student, show the Student Gatekeeper
   if (!currentStudent) {
     return (
       <div className="tvi-app-root">
@@ -80,13 +80,12 @@ export default function App() {
     );
   }
 
-  // Once verified as a student, full access to TVI
   return (
     <div className={`tvi-app-root ${cursorEnabled ? 'custom-cloud-cursor-active' : ''}`}>
-      {/* Dynamic Cloud Cursor & Falling Stars Particle System (Desktop) */}
+      {/* Dynamic Leaf Cursor & Particle System (Desktop) */}
       <CloudCursor enabled={cursorEnabled} key={`cursor-${cursorEnabled}`} />
 
-      {/* Navigation Header with Verified Student Pill and Mobile Drawer */}
+      {/* Prominent Petrol-Green Navigation Header */}
       <Navbar
         cursorEnabled={cursorEnabled}
         onToggleCursor={handleToggleCursor}
@@ -97,32 +96,38 @@ export default function App() {
 
       {/* Main Content Flow */}
       <main className="main-content-flow">
-        {/* Hero Section */}
+        {/* Split Formal Hero Section */}
         <Hero
           onStartSurvey={handleScrollToSurvey}
           onMeetNubi={handleOpenNubi}
         />
 
-        {/* Panorama Estudiantil (4 Key Indicators & Delicacy Reflection) */}
+        {/* Panorama Estudiantil */}
         <PanoramaEstudiantil />
 
-        {/* Ámbito Escolar & Género (Pillars & Real-World Cases) */}
+        {/* ¿Por qué es necesario fomentar la igualdad en la secundaria? */}
+        <IgualdadSecundaria />
+
+        {/* Ámbito Escolar & Género */}
         <AmbitoEscolar />
 
-        {/* Mitos y Verdades (Concise & Optimized for PC and Mobile) */}
+        {/* Mitos y Verdades */}
         <MitosVerdades />
 
-        {/* Muro de Voces Estudiantiles (Anonymous & Safe Space) */}
+        {/* Muro de Voces Estudiantiles */}
         <MuroAnonimo currentStudent={currentStudent} />
 
-        {/* Encuesta Escolar ("¿realmente te sientes escuchadx en tu ámbito escolar?") */}
+        {/* Encuesta Escolar */}
         <EncuestaEscolar />
+
+        {/* Conclusión */}
+        <ConclusionSection />
       </main>
 
-      {/* Comforting & Reflective Footer */}
+      {/* Footer with custom background */}
       <Footer />
 
-      {/* Interactive Nubi Assistant Modal & Floating Companion (Mobile & PC) */}
+      {/* Interactive Hojita Assistant Modal */}
       <NubiCompanionModal
         isOpen={isNubiOpen}
         onToggle={handleToggleNubi}

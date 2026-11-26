@@ -3,41 +3,43 @@ import { DATOS_NUBI } from '../data/tviData';
 
 export default function CloudCursor({ enabled = true }) {
   const canvasRef = useRef(null);
-  const cloudRef = useRef(null);
+  const leafRef = useRef(null);
+  const mascotWrapRef = useRef(null);
   const bubbleRef = useRef(null);
 
-  const [mousePos, setMousePos] = useState({ x: -200, y: -200 });
-  const [isVisible, setIsVisible] = useState(false);
+  const [isTouchDevice] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(pointer: coarse)').matches && !window.matchMedia('(pointer: fine)').matches;
+  });
   const [isHoveringClickable, setIsHoveringClickable] = useState(false);
   const [currentFact, setCurrentFact] = useState('');
   const [showBubble, setShowBubble] = useState(false);
-  const [cloudMood, setCloudMood] = useState('happy'); // happy, excited, talking, listening
+  const [leafMood, setLeafMood] = useState('happy'); // happy, talking
 
-  const mouseRef = useRef({ x: -200, y: -200, lastX: -200, lastY: -200, speed: 0 });
+  const mouseRef = useRef({ x: -200, y: -200, lastX: -200, lastY: -200 });
+  const isVisibleRef = useRef(false);
+  const isHoveringRef = useRef(false);
   const particlesRef = useRef([]);
   const animFrameRef = useRef(null);
   const idleTimerRef = useRef(null);
   const bubbleTimerRef = useRef(null);
-  const isTouchDevice = useRef(false);
 
-  // Trigger Nubi speech bubble with a random fact
+  // Trigger Leaf mascot speech bubble with a random friendly fact
   const speakRandomFact = useCallback(() => {
     const randomFact = DATOS_NUBI[Math.floor(Math.random() * DATOS_NUBI.length)];
     setCurrentFact(randomFact);
     setShowBubble(true);
-    setCloudMood('talking');
+    setLeafMood('talking');
 
     if (bubbleTimerRef.current) clearTimeout(bubbleTimerRef.current);
     bubbleTimerRef.current = setTimeout(() => {
       setShowBubble(false);
-      setCloudMood('happy');
+      setLeafMood('happy');
     }, 6000);
   }, []);
 
   useEffect(() => {
-    // Detect touch-only devices to avoid intrusive desktop cursor on touchscreens
-    if (window.matchMedia('(pointer: coarse)').matches && !window.matchMedia('(pointer: fine)').matches) {
-      isTouchDevice.current = true;
+    if (!enabled || isTouchDevice) {
       return;
     }
 
@@ -57,15 +59,15 @@ export default function CloudCursor({ enabled = true }) {
       speakRandomFact();
     }, 1500);
 
-    // Star particle system with gentle gravity and fading
-    const starShapes = ['★', '✦', '⋆', '•'];
-    const starColors = [
-      '#facc15', // yellow
-      '#fbbf24', // amber
-      '#38bdf8', // light blue
-      '#c084fc', // soft purple
-      '#ffffff', // bright white
-      '#fed7aa'  // warm peach
+    // Botanical leaf & dewdrop particle system (lightweight, no shadowBlur lag)
+    const leafParticles = ['🍃', '✦', '⋆', '•'];
+    const leafColors = [
+      '#7ca382',
+      '#a3c4a8',
+      '#588157',
+      '#d9e8d8',
+      '#fde68a',
+      '#ffffff'
     ];
 
     let lastSpawn = 0;
@@ -75,6 +77,15 @@ export default function CloudCursor({ enabled = true }) {
       const currentX = e.clientX;
       const currentY = e.clientY;
 
+      // Direct GPU-accelerated DOM transform update: zero React re-render lag
+      if (leafRef.current) {
+        leafRef.current.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+        if (!isVisibleRef.current) {
+          isVisibleRef.current = true;
+          leafRef.current.style.opacity = '1';
+        }
+      }
+
       const dx = currentX - mouseRef.current.lastX;
       const dy = currentY - mouseRef.current.lastY;
       const dist = Math.hypot(dx, dy);
@@ -83,61 +94,62 @@ export default function CloudCursor({ enabled = true }) {
       mouseRef.current.y = currentY;
       mouseRef.current.lastX = currentX;
       mouseRef.current.lastY = currentY;
-      mouseRef.current.speed = dist;
 
-      setMousePos({ x: currentX, y: currentY });
-      setIsVisible(true);
-
-      // Check if hovering clickable element
+      // Only trigger state update if hover state actually changes
       const target = e.target;
-      if (target && (target.closest('button') || target.closest('a') || target.closest('input') || target.closest('.clickable'))) {
-        setIsHoveringClickable(true);
-      } else {
-        setIsHoveringClickable(false);
+      const hovering = Boolean(
+        target && (target.closest('button') || target.closest('a') || target.closest('input') || target.closest('.clickable'))
+      );
+      if (hovering !== isHoveringRef.current) {
+        isHoveringRef.current = hovering;
+        setIsHoveringClickable(hovering);
       }
 
-      // Spawn falling stars smoothly if moving and throttled (capped at 55 total particles for 60fps)
-      if (dist > 3 && now - lastSpawn > 35 && particlesRef.current.length < 55) {
+      // Spawn lightweight floating leaves/sparkles (capped at 36 particles)
+      if (dist > 4 && now - lastSpawn > 45 && particlesRef.current.length < 36) {
         lastSpawn = now;
-        const count = dist > 20 ? 2 : 1;
-        for (let i = 0; i < count; i++) {
-          particlesRef.current.push({
-            x: currentX + (Math.random() - 0.5) * 22,
-            y: currentY + 14 + Math.random() * 8, // spawn just underneath the cloud
-            vx: (Math.random() - 0.5) * 1.6,
-            vy: Math.random() * 1.2 + 0.6, // gentle downward drift
-            size: Math.random() * 10 + 9,
-            shape: starShapes[Math.floor(Math.random() * starShapes.length)],
-            color: starColors[Math.floor(Math.random() * starColors.length)],
-            alpha: 1,
-            decay: Math.random() * 0.022 + 0.016,
-            rotation: Math.random() * Math.PI * 2,
-            rotSpeed: (Math.random() - 0.5) * 0.08,
-            sway: Math.random() * 0.04
-          });
-        }
+        particlesRef.current.push({
+          x: currentX + (Math.random() - 0.5) * 18,
+          y: currentY + 12 + Math.random() * 6,
+          vx: (Math.random() - 0.5) * 1.3,
+          vy: Math.random() * 0.9 + 0.5,
+          size: Math.random() * 7 + 9,
+          shape: leafParticles[Math.floor(Math.random() * leafParticles.length)],
+          color: leafColors[Math.floor(Math.random() * leafColors.length)],
+          alpha: 0.92,
+          decay: Math.random() * 0.022 + 0.018,
+          rotation: Math.random() * Math.PI * 2,
+          rotSpeed: (Math.random() - 0.5) * 0.06,
+          sway: Math.random() * 0.05
+        });
       }
 
       // Reset idle timer for sharing facts
       if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
       idleTimerRef.current = setTimeout(() => {
         speakRandomFact();
-      }, 12000); // speaks every 12s of idle
+      }, 12000);
     };
 
     const handleMouseLeave = () => {
-      setIsVisible(false);
+      if (isVisibleRef.current) {
+        isVisibleRef.current = false;
+        if (leafRef.current) leafRef.current.style.opacity = '0';
+      }
     };
 
     const handleMouseEnter = () => {
-      setIsVisible(true);
+      if (!isVisibleRef.current) {
+        isVisibleRef.current = true;
+        if (leafRef.current) leafRef.current.style.opacity = '1';
+      }
     };
 
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave);
     document.addEventListener('mouseenter', handleMouseEnter);
 
-    // Render loop for stars (hardware accelerated canvas)
+    // Render loop for botanical particles (no shadowBlur for smooth 60/120fps)
     let isRunning = true;
     const render = () => {
       if (!isRunning) return;
@@ -146,13 +158,13 @@ export default function CloudCursor({ enabled = true }) {
       const particles = particlesRef.current;
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
-        p.x += p.vx + Math.sin(p.y * p.sway) * 0.3;
+        p.x += p.vx + Math.sin(p.y * p.sway) * 0.4;
         p.y += p.vy;
-        p.vy += 0.04; // subtle gravity
+        p.vy += 0.03;
         p.alpha -= p.decay;
         p.rotation += p.rotSpeed;
 
-        if (p.alpha <= 0 || p.y > window.innerHeight) {
+        if (p.alpha <= 0 || p.y > canvas.height) {
           particles.splice(i, 1);
           continue;
         }
@@ -165,8 +177,6 @@ export default function CloudCursor({ enabled = true }) {
         ctx.fillStyle = p.color;
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 6;
         ctx.fillText(p.shape, 0, 0);
         ctx.restore();
       }
@@ -187,15 +197,15 @@ export default function CloudCursor({ enabled = true }) {
       if (idleTimerRef.current) clearTimeout(idleTimerRef.current);
       if (bubbleTimerRef.current) clearTimeout(bubbleTimerRef.current);
     };
-  }, [speakRandomFact]);
+  }, [enabled, isTouchDevice, speakRandomFact]);
 
-  if (!enabled || isTouchDevice.current) {
+  if (!enabled || isTouchDevice) {
     return null;
   }
 
   return (
     <>
-      {/* Canvas for falling stars trail */}
+      {/* Canvas for gentle floating leaf trail */}
       <canvas
         ref={canvasRef}
         className="pointer-events-none fixed inset-0 z-[99998]"
@@ -210,138 +220,151 @@ export default function CloudCursor({ enabled = true }) {
         }}
       />
 
-      {/* Cloud Mascot Pointer */}
+      {/* Leaf Mascot Pointer (positioned via direct DOM transform for zero lag) */}
       <div
-        ref={cloudRef}
+        ref={leafRef}
         className="cloud-cursor-wrapper"
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
-          transform: `translate3d(${mousePos.x}px, ${mousePos.y}px, 0)`,
+          transform: 'translate3d(-200px, -200px, 0)',
           pointerEvents: 'none',
           zIndex: 99999,
-          opacity: isVisible ? 1 : 0,
-          transition: 'opacity 0.25s ease-out',
+          opacity: 0,
+          transition: 'opacity 0.2s ease-out',
           willChange: 'transform',
         }}
       >
-        {/* Animated Cute Cloud SVG */}
+        {/* Animated Cute Sage Leaf SVG */}
         <div
+          ref={mascotWrapRef}
           className={`cloud-mascot ${isHoveringClickable ? 'cloud-hover' : ''}`}
           style={{
             position: 'absolute',
             top: -18,
             left: -18,
-            width: 48,
-            height: 48,
-            filter: 'drop-shadow(0 4px 10px rgba(99, 102, 241, 0.35))',
-            transition: 'transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1)',
-            transform: isHoveringClickable ? 'scale(1.22) rotate(-6deg)' : 'scale(1)',
+            width: 44,
+            height: 44,
+            transition: 'transform 0.16s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            transform: isHoveringClickable ? 'scale(1.18) rotate(-8deg)' : 'scale(1)',
           }}
         >
           <svg
-            viewBox="0 0 100 70"
+            viewBox="0 0 100 100"
             width="100%"
             height="100%"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <defs>
-              <linearGradient id="cloudGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#ffffff" />
-                <stop offset="55%" stopColor="#f0f9ff" />
-                <stop offset="100%" stopColor="#bae6fd" />
+              <linearGradient id="leafGrad" x1="15%" y1="10%" x2="85%" y2="90%">
+                <stop offset="0%" stopColor="#d9ecda" />
+                <stop offset="45%" stopColor="#93bfa0" />
+                <stop offset="100%" stopColor="#588565" />
               </linearGradient>
-              <linearGradient id="blushGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#f472b6" stopOpacity="0.8" />
-                <stop offset="100%" stopColor="#fb7185" stopOpacity="0.4" />
+              <linearGradient id="leafBlushGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#fda4af" stopOpacity="0.85" />
+                <stop offset="100%" stopColor="#fb7185" stopOpacity="0.45" />
               </linearGradient>
-              <filter id="softGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#38bdf8" floodOpacity="0.3" />
-              </filter>
             </defs>
 
-            {/* Cloud Body */}
+            {/* Cute curved stem */}
             <path
-              d="M 28 58 
-                 C 16 58 8 50 8 38 
-                 C 8 28 15 20 25 18 
-                 C 29 9 40 4 52 4 
-                 C 66 4 77 12 80 23 
-                 C 89 25 96 32 96 42 
-                 C 96 52 88 58 76 58 
-                 Z"
-              fill="url(#cloudGrad)"
-              stroke="#60a5fa"
-              strokeWidth="2.5"
+              d="M 22 76 Q 14 84 10 90"
+              stroke="#3b6247"
+              strokeWidth="4.2"
+              strokeLinecap="round"
+              fill="none"
+            />
+
+            {/* Main Leaf Body */}
+            <path
+              d="M 82 16
+                 C 52 14, 24 28, 20 58
+                 C 19 66, 20 73, 24 78
+                 C 33 83, 48 84, 62 76
+                 C 80 65, 86 39, 82 16 Z"
+              fill="url(#leafGrad)"
+              stroke="#3b6247"
+              strokeWidth="2.8"
               strokeLinejoin="round"
-              filter="url(#softGlow)"
+            />
+
+            {/* Subtle central leaf vein */}
+            <path
+              d="M 24 76 Q 48 52 75 24"
+              stroke="#e9f4ea"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              opacity="0.7"
+              fill="none"
+            />
+            <path
+              d="M 43 58 L 39 45 M 57 44 L 54 32 M 50 51 L 64 53"
+              stroke="#e9f4ea"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              opacity="0.55"
+              fill="none"
             />
 
             {/* Rosy Cheeks */}
-            <ellipse cx="28" cy="40" rx="5.5" ry="3.5" fill="url(#blushGrad)" />
-            <ellipse cx="68" cy="40" rx="5.5" ry="3.5" fill="url(#blushGrad)" />
+            <ellipse cx="38" cy="59" rx="5.2" ry="3.2" fill="url(#leafBlushGrad)" />
+            <ellipse cx="67" cy="55" rx="5.2" ry="3.2" fill="url(#leafBlushGrad)" />
 
             {/* Eyes */}
-            {cloudMood === 'talking' ? (
-              // Happy squinting eyes
+            {leafMood === 'talking' ? (
               <>
-                <path d="M 34 32 Q 38 27 42 32" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" />
-                <path d="M 54 32 Q 58 27 62 32" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M 42 49 Q 45.5 44.5 49 49" stroke="#1b3022" strokeWidth="2.4" strokeLinecap="round" />
+                <path d="M 59 47 Q 62.5 42.5 66 47" stroke="#1b3022" strokeWidth="2.4" strokeLinecap="round" />
               </>
             ) : isHoveringClickable ? (
-              // Starry / big excited eyes
               <>
-                <circle cx="38" cy="31" r="4" fill="#0f172a" />
-                <circle cx="36.5" cy="29.5" r="1.5" fill="#ffffff" />
-                <circle cx="58" cy="31" r="4" fill="#0f172a" />
-                <circle cx="56.5" cy="29.5" r="1.5" fill="#ffffff" />
+                <circle cx="45" cy="48" r="3.8" fill="#132519" />
+                <circle cx="43.8" cy="46.6" r="1.4" fill="#ffffff" />
+                <circle cx="63" cy="46" r="3.8" fill="#132519" />
+                <circle cx="61.8" cy="44.6" r="1.4" fill="#ffffff" />
               </>
             ) : (
-              // Friendly calm eyes
               <>
-                <circle cx="38" cy="32" r="3.2" fill="#1e293b" />
-                <circle cx="37" cy="30.8" r="1.2" fill="#ffffff" />
-                <circle cx="58" cy="32" r="3.2" fill="#1e293b" />
-                <circle cx="57" cy="30.8" r="1.2" fill="#ffffff" />
+                <circle cx="45" cy="49" r="3.1" fill="#1b3022" />
+                <circle cx="44" cy="47.8" r="1.1" fill="#ffffff" />
+                <circle cx="63" cy="47" r="3.1" fill="#1b3022" />
+                <circle cx="62" cy="45.8" r="1.1" fill="#ffffff" />
               </>
             )}
 
             {/* Smile / Mouth */}
-            {cloudMood === 'talking' ? (
+            {leafMood === 'talking' ? (
               <path
-                d="M 44 38 Q 48 45 52 38 Z"
+                d="M 50 56 Q 55 62.5 59 55 Z"
                 fill="#f43f5e"
-                stroke="#1e293b"
-                strokeWidth="1.8"
+                stroke="#1b3022"
+                strokeWidth="1.7"
                 strokeLinecap="round"
               />
             ) : isHoveringClickable ? (
               <path
-                d="M 43 38 Q 48 46 53 38"
-                stroke="#1e293b"
-                strokeWidth="2.2"
+                d="M 49 55 Q 54.5 62 60 54"
+                stroke="#1b3022"
+                strokeWidth="2.1"
                 strokeLinecap="round"
                 fill="none"
               />
             ) : (
               <path
-                d="M 44 38 Q 48 43 52 38"
-                stroke="#1e293b"
+                d="M 50 55 Q 54.5 59.5 59 54"
+                stroke="#1b3022"
                 strokeWidth="2"
                 strokeLinecap="round"
                 fill="none"
               />
             )}
 
-            {/* Mini Star Sparkle on head */}
-            <path
-              d="M 68 12 L 70 8 L 72 12 L 76 14 L 72 16 L 70 20 L 68 16 L 64 14 Z"
-              fill="#fbbf24"
-              stroke="#f59e0b"
-              strokeWidth="0.8"
-            />
+            {/* Little Morning Dewdrop */}
+            <circle cx="71" cy="29" r="3" fill="#ffffff" opacity="0.88" />
+            <circle cx="70" cy="28" r="1" fill="#d9ecda" />
           </svg>
         </div>
 
@@ -357,13 +380,13 @@ export default function CloudCursor({ enabled = true }) {
               minWidth: 230,
               maxWidth: 320,
               padding: '10px 14px',
-              backgroundColor: 'rgba(255, 255, 255, 0.96)',
+              backgroundColor: 'rgba(252, 254, 252, 0.97)',
               backdropFilter: 'blur(10px)',
-              border: '2px solid #93c5fd',
+              border: '2px solid #9ab99f',
               borderRadius: '16px',
               borderBottomLeftRadius: '3px',
-              boxShadow: '0 10px 25px -5px rgba(59, 130, 246, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
-              color: '#1e293b',
+              boxShadow: '0 10px 25px -5px rgba(74, 124, 89, 0.22), 0 8px 10px -6px rgba(0, 0, 0, 0.08)',
+              color: '#1e3024',
               fontSize: '13px',
               lineHeight: '1.45',
               fontFamily: 'system-ui, -apple-system, sans-serif',
@@ -373,9 +396,9 @@ export default function CloudCursor({ enabled = true }) {
               transformOrigin: 'bottom left',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', color: '#2563eb', fontWeight: 700, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-              <span>☁️ Nubi (Mascota TVI)</span>
-              <span style={{ fontSize: '10px', background: '#dbeafe', padding: '1px 6px', borderRadius: '8px' }}>Dato amistoso</span>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginBottom: '4px', color: '#3b6247', fontWeight: 700, fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+              <span>🍃 Hojita (Mascota TVI)</span>
+              <span style={{ fontSize: '10px', background: '#e5efe6', padding: '1px 6px', borderRadius: '8px', color: '#2f523a' }}>Dato amistoso</span>
             </div>
             <div>{currentFact}</div>
           </div>
@@ -384,4 +407,3 @@ export default function CloudCursor({ enabled = true }) {
     </>
   );
 }
-

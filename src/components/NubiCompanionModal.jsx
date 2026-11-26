@@ -20,16 +20,16 @@ export default function NubiCompanionModal({ isOpen, onToggle, onClose }) {
         <button
           onClick={onToggle}
           className={`nubi-bubble-btn ${isWiggling ? 'nubi-wiggle' : ''} ${isOpen ? 'active-companion' : ''}`}
-          aria-label="Abrir asistente Pregunta a Nubi"
-          title="¡Haz clic para hablar o preguntar a Nubi!"
+          aria-label="Abrir asistente Pregunta a Hojita"
+          title="¡Haz clic para hablar o preguntar a Hojita!"
         >
-          <span className="nubi-avatar-icon">☁️</span>
-          <span className="nubi-btn-label">Pregunta a Nubi</span>
+          <span className="nubi-avatar-icon">🍃</span>
+          <span className="nubi-btn-label">Pregunta a Hojita</span>
           <span className="nubi-sparkle-dot"></span>
         </button>
       </div>
 
-      {/* Backdrop Overlay when Nubi is Open */}
+      {/* Backdrop Overlay when Hojita is Open */}
       {isOpen && (
         <div className="nubi-backdrop" onClick={onClose} aria-hidden="true" />
       )}
@@ -40,16 +40,16 @@ export default function NubiCompanionModal({ isOpen, onToggle, onClose }) {
           {/* Header */}
           <div className="nubi-popup-header">
             <div className="nubi-popup-title">
-              <div className="nubi-avatar-badge">☁️✨</div>
+              <div className="nubi-avatar-badge">🍃</div>
               <div>
-                <h4 id="nubi-title">Nubi • Tu Mascota Amiga</h4>
-                <p>Pregúntame sobre igualdad y convivencia escolar</p>
+                <h4 id="nubi-title">Hojita • Guía TVI</h4>
+                <p>Orientación sobre igualdad y convivencia escolar</p>
               </div>
             </div>
             <button
               onClick={onClose}
               className="nubi-close-btn"
-              aria-label="Cerrar diálogo de Nubi"
+              aria-label="Cerrar diálogo de Hojita"
             >
               ✕
             </button>
@@ -89,7 +89,7 @@ export default function NubiCompanionModal({ isOpen, onToggle, onClose }) {
 
                 <div className="nubi-answer-card">
                   <div className="answer-header">
-                    <span className="answer-cloud-tag">☁️ Nubi responde:</span>
+                    <span className="answer-cloud-tag">🍃 Hojita responde:</span>
                   </div>
                   <p className="answer-text">
                     {NUBI_PREGUNTAS_RAPIDAS[selectedPregunta].respuesta}
@@ -110,7 +110,7 @@ export default function NubiCompanionModal({ isOpen, onToggle, onClose }) {
             )}
 
             <div className="nubi-quick-reminder">
-              <span className="font-semibold text-sky-800">🤍 Recuerda:</span> Tu voz y tus límites importan siempre. Si necesitas ayuda, habla con un supervisor o docente de confianza.
+              <span className="nubi-reminder-lead">🤍 Recuerda:</span> Tu voz y tus límites importan siempre. Si necesitas ayuda, habla con un supervisor o docente de confianza.
             </div>
           </div>
 

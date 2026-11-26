@@ -95,83 +95,88 @@ export default function EncuestaEscolar() {
 
       {!resultado ? (
         <div className="encuesta-box-container">
-          {/* Progress Header */}
-          <div className="encuesta-progress-bar-wrap">
-            <div className="progress-info-row">
-              <span className="font-semibold text-slate-700">
-                Pregunta {currentStep + 1} de {totalPreguntas}
-              </span>
-              <span className="text-sm font-medium text-slate-500">
-                {progressPercent}% completado
-              </span>
-            </div>
-            <div className="quiz-progress-track">
-              <div
-                className="quiz-progress-fill"
-                style={{ width: `${((currentStep + 1) / totalPreguntas) * 100}%` }}
-              />
-            </div>
-          </div>
+          <div className="encuesta-horizontal-grid">
+            {/* Left Column: Progress & Question */}
+            <div className="encuesta-left-col">
+              <div className="encuesta-progress-bar-wrap">
+                <div className="progress-info-row">
+                  <span className="progress-step-label">
+                    Pregunta {currentStep + 1} de {totalPreguntas}
+                  </span>
+                  <span className="progress-percent-label">
+                    {progressPercent}% completado
+                  </span>
+                </div>
+                <div className="quiz-progress-track">
+                  <div
+                    className="quiz-progress-fill"
+                    style={{ width: `${((currentStep + 1) / totalPreguntas) * 100}%` }}
+                  />
+                </div>
+              </div>
 
-          {/* Question Card */}
-          <div className="quiz-question-card">
-            <div className="question-number-pill">Pregunta #{currentQ.id}</div>
-            <h3 className="question-text">{currentQ.pregunta}</h3>
+              <div className="quiz-question-card">
+                <div className="question-number-pill">Pregunta #{currentQ.id}</div>
+                <h3 className="question-text">{currentQ.pregunta}</h3>
+              </div>
 
-            <div className="quiz-options-list">
-              {currentQ.opciones.map((op, idx) => {
-                const isSelected = respuestas[currentQ.id]?.texto === op.texto || respuestas[currentQ.id]?.puntos === op.puntos;
-                return (
+              <div className="quiz-disclaimer">
+                <span>🔒 Tus respuestas no se guardan en ningún servidor. Este test es 100% privado y seguro.</span>
+              </div>
+            </div>
+
+            {/* Right Column: Options & Stepper Controls */}
+            <div className="encuesta-right-col">
+              <div className="quiz-options-list">
+                {currentQ.opciones.map((op, idx) => {
+                  const isSelected = respuestas[currentQ.id]?.texto === op.texto || respuestas[currentQ.id]?.puntos === op.puntos;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      className={`quiz-option-button ${isSelected ? 'option-selected' : ''} option-${op.color}`}
+                      onClick={() => handleSelectOption(currentQ.id, op.puntos, op.color)}
+                    >
+                      <div className="option-indicator-bubble">
+                        {op.color === 'verde' && '🟢'}
+                        {op.color === 'amarillo' && '🟡'}
+                        {op.color === 'rojo' && '🔴'}
+                      </div>
+                      <span className="option-text-label">{op.texto}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Stepper Navigation Buttons */}
+              <div className="quiz-navigation-controls">
+                <button
+                  onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
+                  disabled={currentStep === 0}
+                  className="btn-stepper btn-prev"
+                >
+                  ◀ Anterior
+                </button>
+
+                {currentStep < totalPreguntas - 1 ? (
                   <button
-                    key={idx}
-                    type="button"
-                    className={`quiz-option-button ${isSelected ? 'option-selected' : ''} option-${op.color}`}
-                    onClick={() => handleSelectOption(currentQ.id, op.puntos, op.color)}
+                    onClick={() => setCurrentStep((prev) => Math.min(totalPreguntas - 1, prev + 1))}
+                    disabled={!respuestas[currentQ.id]}
+                    className="btn-stepper btn-next"
                   >
-                    <div className="option-indicator-bubble">
-                      {op.color === 'verde' && '🟢'}
-                      {op.color === 'amarillo' && '🟡'}
-                      {op.color === 'rojo' && '🔴'}
-                    </div>
-                    <span className="option-text-label">{op.texto}</span>
+                    Siguiente ▶
                   </button>
-                );
-              })}
+                ) : (
+                  <button
+                    onClick={calcularResultado}
+                    disabled={answeredCount < totalPreguntas}
+                    className="btn-stepper btn-finish"
+                  >
+                    🏁 Ver mi diagnóstico y semáforo
+                  </button>
+                )}
+              </div>
             </div>
-          </div>
-
-          {/* Stepper Navigation Buttons */}
-          <div className="quiz-navigation-controls">
-            <button
-              onClick={() => setCurrentStep((prev) => Math.max(0, prev - 1))}
-              disabled={currentStep === 0}
-              className="btn-stepper btn-prev"
-            >
-              ◀ Anterior
-            </button>
-
-            {currentStep < totalPreguntas - 1 ? (
-              <button
-                onClick={() => setCurrentStep((prev) => Math.min(totalPreguntas - 1, prev + 1))}
-                disabled={!respuestas[currentQ.id]}
-                className="btn-stepper btn-next"
-              >
-                Siguiente ▶
-              </button>
-            ) : (
-              <button
-                onClick={calcularResultado}
-                disabled={answeredCount < totalPreguntas}
-                className="btn-stepper btn-finish"
-              >
-                🏁 Ver mi diagnóstico y semáforo
-              </button>
-            )}
-          </div>
-
-          {/* Helper notes */}
-          <div className="quiz-disclaimer">
-            <span>🔒 Tus respuestas no se guardan en ningún servidor. Este test es 100% privado y seguro.</span>
           </div>
         </div>
       ) : (
@@ -194,46 +199,48 @@ export default function EncuestaEscolar() {
             </div>
           </div>
 
-          {/* Percentages Breakdown to emphasize delicate nature */}
-          <div className="result-percentages-panel">
-            <h4 className="panel-subheading">Distribución de tu vivencia escolar:</h4>
-            <div className="percentage-bars-breakdown">
-              <div className="breakdown-item">
-                <div className="breakdown-label">
-                  <span>🟢 Vivencias Seguras y de Respeto:</span>
-                  <strong>{resultado.porcentajeVerde}%</strong>
+          {/* Horizontal Pair: Percentages Breakdown + Pedagogical Analysis */}
+          <div className="result-horizontal-pair">
+            <div className="result-percentages-panel">
+              <h4 className="panel-subheading">Distribución de tu vivencia escolar:</h4>
+              <div className="percentage-bars-breakdown">
+                <div className="breakdown-item">
+                  <div className="breakdown-label">
+                    <span>🟢 Vivencias Seguras y de Respeto:</span>
+                    <strong>{resultado.porcentajeVerde}%</strong>
+                  </div>
+                  <div className="breakdown-track">
+                    <div className="breakdown-bar bar-green" style={{ width: `${resultado.porcentajeVerde}%` }} />
+                  </div>
                 </div>
-                <div className="breakdown-track">
-                  <div className="breakdown-bar bar-green" style={{ width: `${resultado.porcentajeVerde}%` }} />
-                </div>
-              </div>
 
-              <div className="breakdown-item">
-                <div className="breakdown-label">
-                  <span>🟡 Momentos con Sesgos o Inseguridad Parcial:</span>
-                  <strong>{resultado.porcentajeAmarillo}%</strong>
+                <div className="breakdown-item">
+                  <div className="breakdown-label">
+                    <span>🟡 Momentos con Sesgos o Inseguridad Parcial:</span>
+                    <strong>{resultado.porcentajeAmarillo}%</strong>
+                  </div>
+                  <div className="breakdown-track">
+                    <div className="breakdown-bar bar-yellow" style={{ width: `${resultado.porcentajeAmarillo}%` }} />
+                  </div>
                 </div>
-                <div className="breakdown-track">
-                  <div className="breakdown-bar bar-yellow" style={{ width: `${resultado.porcentajeAmarillo}%` }} />
-                </div>
-              </div>
 
-              <div className="breakdown-item">
-                <div className="breakdown-label">
-                  <span>🔴 Situaciones de Riesgo, Silenciamiento o Acoso:</span>
-                  <strong>{resultado.porcentajeRojo}%</strong>
-                </div>
-                <div className="breakdown-track">
-                  <div className="breakdown-bar bar-red" style={{ width: `${resultado.porcentajeRojo}%` }} />
+                <div className="breakdown-item">
+                  <div className="breakdown-label">
+                    <span>🔴 Situaciones de Riesgo, Silenciamiento o Acoso:</span>
+                    <strong>{resultado.porcentajeRojo}%</strong>
+                  </div>
+                  <div className="breakdown-track">
+                    <div className="breakdown-bar bar-red" style={{ width: `${resultado.porcentajeRojo}%` }} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Deep Emotional & Pedagogical Analysis */}
-          <div className="result-analysis-box">
-            <h4>Análisis de tu situación</h4>
-            <p>{resultado.info.analisis}</p>
+            {/* Deep Emotional & Pedagogical Analysis */}
+            <div className="result-analysis-box">
+              <h4>Análisis de tu situación</h4>
+              <p>{resultado.info.analisis}</p>
+            </div>
           </div>
 
           {/* Actionable Steps for Safety & Help */}
